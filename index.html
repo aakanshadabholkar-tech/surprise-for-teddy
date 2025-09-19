@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Secret Love Card</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent1:#ff5ec4;
+  --accent2:#8b5cff;
+  --muted:rgba(255,255,255,0.6);
+  --glow:0 12px 30px rgba(139,92,255,0.15),0 6px 12px rgba(255,94,196,0.08);
+}
+*{box-sizing:border-box;}
+html,body{height:100%;margin:0;font-family:"Quicksand",system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;overflow:hidden;}
+body{
+  background: radial-gradient(1200px 600px at 10% 20%, rgba(139,92,255,0.12), transparent),
+              radial-gradient(900px 400px at 90% 80%, rgba(255,94,196,0.08), transparent),
+              linear-gradient(180deg,#020007 0%, #0b0210 100%);
+  color:#fff; display:flex; align-items:center; justify-content:center; padding:20px;
+}
+.wrap { width:360px; max-width:94vw; height:640px; position:relative; display:flex; align-items:center; justify-content:center;}
+.page{ position:absolute; top:0; left:0; width:100%; height:100%; border-radius:20px; padding:28px; overflow:hidden; opacity:0; transition: transform 0.6s ease, opacity 0.6s ease; display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center;}
+.page.show{display:flex; opacity:1; transform:translate(0,0);}
+.slide-bottom{transform:translateY(100%);}
+.slide-right{transform:translateX(100%);}
+.slide-top{transform:translateY(-100%);}
+.heart-float{ position:absolute; font-size:16px; color:var(--accent1); pointer-events:none; opacity:0.8; animation:floatUp linear infinite;}
+@keyframes floatUp{ 0%{transform:translateY(0) scale(1);} 100%{transform:translateY(-700px) scale(1.2); opacity:0;} }
+
+.page1 { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); flex-direction: column; align-items: center; justify-content: center; gap:18px; text-align:center;}
+.heartBig{font-size:64px; color:var(--accent1); text-shadow:0 6px 22px rgba(255,94,196,0.14); transform:translateY(-10px);}
+h1{font-family:"Pacifico"; font-size:28px; margin:0; color:#f4d0ff; text-shadow:0 2px 8px rgba(139,92,255,0.12);}
+.sub, #msgIntro{color:var(--muted); font-size:14px; min-height:20px; margin-bottom:12px;}
+.barWrap{width:80%; margin-top:8px;}
+.bar{height:10px; background:rgba(255,255,255,0.06); border-radius:999px; overflow:hidden;}
+.barFill{height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg,var(--accent1),var(--accent2)); box-shadow:var(--glow); transition:width 1s linear;}
+.percent{color:#f1e6ff; font-weight:600; margin-top:8px; font-size:13px;}
+
+.card{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:16px; padding:20px; box-shadow:var(--glow); border:1px solid rgba(255,255,255,0.03);}
+.lockIcon{font-size:26px; color:var(--accent1);}
+.secretTitle{font-family:"Pacifico"; font-size:22px; margin:6px 0; color:#ffd9f8;}
+.hint{color:var(--muted); font-size:13px; margin-bottom:12px;}
+.codeBox{display:flex; gap:10px; justify-content:center; align-items:center; padding:14px; background:rgba(255,255,255,0.02); border-radius:12px;}
+.digit{ width:44px; height:44px; border-radius:10px; background:rgba(255,255,255,0.02); display:flex; align-items:center; justify-content:center; font-size:20px; letter-spacing:2px; cursor:pointer; transition:all .18s; border:1px solid rgba(255,255,255,0.03);}
+.digit.fill{background:linear-gradient(90deg,var(--accent1),var(--accent2)); box-shadow:0 6px 18px rgba(139,92,255,0.14); color:#fff; transform:translateY(-2px);}
+.unlockBtn{display:block;margin-top:14px;padding:12px;border-radius:12px;border:none;width:100%;font-weight:600;background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:white; cursor:pointer;box-shadow:var(--glow);}
+.unlockBtn:active{transform:translateY(1px)}
+.msg{font-size:13px;color:#ffdff4;text-align:center;margin-top:8px}
+
+.page3{display:flex;align-items:center;justify-content:center}
+.page3 .card{width:100%; text-align:center; padding:28px}
+.page3 h2{font-family:"Pacifico"; color:#ffcbea; margin-top:8px; font-size:20px}
+.page3 p{color:var(--muted); font-size:14px}
+.showBtn{margin-top:18px;padding:12px;border-radius:12px;border:none;background:linear-gradient(90deg,var(--accent1),var(--accent2)); color:white;font-weight:600;cursor:pointer;width:75%;}
+.page3 .hintBtn{margin-top:8px; font-size:13px; color:var(--muted); opacity:0.8;}
+
+.page4{padding:22px 20px 20px}
+.page4 .card{height:560px; overflow:auto; padding:22px; border-radius:16px}
+.loveText{line-height:1.6; color:#ffe9ff; font-size:15px; white-space:pre-line;}
+.footerSmall{font-size:13px; color:var(--muted); margin-top:12px; text-align:center}
+
+@media(max-width:420px){ .wrap{width:92%} .card{padding:16px} .page4 .card{height:520px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <!-- Page1 -->
+  <section id="p1" class="page page1 show">
+    <div class="heartBig">💗</div>
+    <h1>Creating Magic</h1>
+    <div class="sub">A beautiful surprise is loading ...</div>
+    <div id="msgIntro"></div>
+    <div class="barWrap">
+      <div class="bar card">
+        <div id="barFill" class="barFill" style="width:0%"></div>
+      </div>
+      <div id="percent" class="percent">0%</div>
+    </div>
+  </section>
+
+  <!-- Page2 Secret -->
+  <section id="p2" class="page page2">
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="lockIcon">🔒</div>
+        <div style="flex:1">
+          <div class="secretTitle">Secret Gateway</div>
+          <div class="hint">Enter the code to unlock my heart 💕<br/><small style="opacity:.85">Hint: Three numbers that mean "I Love You"</small></div>
+        </div>
+      </div>
+      <div class="codeBox" id="codeBox" aria-label="code input">
+        <div class="digit" data-index="0" tabindex="0">♡</div>
+        <div class="digit" data-index="1" tabindex="0">♡</div>
+        <div class="digit" data-index="2" tabindex="0">♡</div>
+      </div>
+      <!-- Hidden input for mobile typing -->
+      <input type="text" id="hiddenInput" inputmode="numeric" pattern="[0-9]*" maxlength="3" style="position:absolute;opacity:0;width:0;height:0;">
+      <button id="unlock" class="unlockBtn">💗 Unlock My Heart 💗</button>
+      <div id="p2msg" class="msg"></div>
+    </div>
+  </section>
+
+  <!-- Page3 -->
+  <section id="p3" class="page page3">
+    <div class="card">
+      <div style="font-size:36px; color:var(--accent1); text-align:center">💗</div>
+      <h2>I've been hiding something sweet...</h2>
+      <p>There's a little secret I've been saving for the right moment. Want to know what it is? 💖</p>
+      <button id="showMe" class="showBtn">💜 Show me 💜</button>
+      <div class="hintBtn">Press the button to reveal 💌</div>
+    </div>
+  </section>
+
+  <!-- Page4 Letter -->
+  <section id="p4" class="page page4">
+    <div class="card">
+      <div style="text-align:center; margin-bottom:12px;"><div style="font-size:28px;color:var(--accent1)">💗</div></div>
+      <div class="loveText" id="letter"></div>
+      <div class="footerSmall">This card was crafted with 💜</div>
+    </div>
+  </section>
+</div>
+
+<!-- Floating hearts -->
+<script>
+function createHeart(){
+  const heart=document.createElement('div');
+  heart.className='heart-float';
+  heart.style.left=Math.random()*360+'px';
+  heart.style.fontSize=(12+Math.random()*16)+'px';
+  heart.style.animationDuration=(3+Math.random()*3)+'s';
+  heart.textContent='💗';
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),5000);
+}
+setInterval(createHeart,400);
+</script>
+
+<script>
+// Pages
+const p1=document.getElementById('p1');
+const p2=document.getElementById('p2');
+const p3=document.getElementById('p3');
+const p4=document.getElementById('p4');
+function show(page,cls){
+  [p1,p2,p3,p4].forEach(p=>p.classList.remove('show','slide-bottom','slide-right','slide-top'));
+  if(cls) page.classList.add(cls);
+  setTimeout(()=>page.classList.add('show'),50);
+}
+
+// Typewriter intro
+const msgIntro=document.getElementById('msgIntro');
+const introText="Firstly HAPPIEST BIRTHDAYY RAHUL..!MHH TEDDYY..!❤️❤️I didn’t know which gift to choose, so I made this for you 💖..I Hope you would love it..!";
+let i=0;
+function typeIntro(){
+  if(i<introText.length){ msgIntro.textContent+=introText.charAt(i); i++; setTimeout(typeIntro,50);}
+  else setTimeout(startLoading,2000);
+}
+typeIntro();
+
+// Loading bar
+function startLoading(){
+  const bar=document.getElementById('barFill');
+  const percent=document.getElementById('percent');
+  let val=0;
+  const loadInterval=setInterval(()=>{
+    val+=Math.floor(Math.random()*8)+6;
+    if(val>100) val=100;
+    bar.style.width=val+'%';
+    percent.textContent=val+'%';
+    if(val>=100){
+      clearInterval(loadInterval);
+      setTimeout(()=>{ show(p2,'slide-bottom'); hiddenInput.focus(); },2000);
+    }
+  },250);
+}
+
+// Secret code logic
+const PASSWORD='143';
+const digits=Array.from(document.querySelectorAll('.digit'));
+const p2msg=document.getElementById('p2msg');
+const unlockBtn=document.getElementById('unlock');
+const hiddenInput=document.getElementById('hiddenInput');
+
+digits.forEach(d=>{
+  d.dataset.val=''; d.textContent='♡';
+  d.addEventListener('click',()=>cycleDigit(d));
+  d.addEventListener('keydown', e=>{
+    if(/^[0-9]$/.test(e.key)){ setDigit(d,e.key); focusNext(d);}
+    else if(e.key==='Backspace'||e.key==='Delete'){ clearDigit(d); focusPrev(d);}
+  });
+});
+
+hiddenInput.addEventListener('input', ()=>{
+  const val = hiddenInput.value;
+  digits.forEach((d,i)=>{ if(val[i]) setDigit(d,val[i]); else clearDigit(d); });
+  if(val.length===3) setTimeout(()=>unlockBtn.click(),300);
+});
+
+hiddenInput.addEventListener('keydown', e=>{
+  if(e.key==='Backspace'){
+    const val=hiddenInput.value;
+    digits.forEach((d,i)=>{ if(!val[i]) clearDigit(d); });
+  }
+});
+
+function cycleDigit(el){ const cur=el.dataset.val||''; if(cur==='') setDigit(el,'1'); else if(cur==='9') clearDigit(el); else setDigit(el,String(Number(cur)+1));}
+function setDigit(el,n){ el.dataset.val=n; el.classList.add('fill'); el.textContent=n; }
+function clearDigit(el){ el.dataset.val=''; el.classList.remove('fill'); el.textContent='♡';}
+function focusNext(el){ const idx=parseInt(el.dataset.index); if(idx<digits.length-1) digits[idx+1].focus();}
+function focusPrev(el){ const idx=parseInt(el.dataset.index); if(idx>0) digits[idx-1].focus();}
+function getCode(){ return digits.map(d=>d.dataset.val||'').join(''); }
+function flashMessage(txt,ok){ p2msg.textContent=txt; p2msg.style.color=ok?'#dfffe8':'#ffd2e5'; setTimeout(()=>p2msg.textContent='',2200); }
+
+unlockBtn.addEventListener('click', ()=>{
+  const code=getCode();
+  if(code.length!==3){ flashMessage('Please enter 3 digits',false); return; }
+  if(code===PASSWORD){ flashMessage('Unlocked! 💖',true); setTimeout(()=>show(p3,'slide-right'),2000);}
+  else { flashMessage('Incorrect code. Try again 💔',false); unlockBtn.animate([{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:360});}
+});
+
+// Page3 -> Page4
+document.getElementById('showMe').addEventListener('click', ()=>{
+  show(p4,'slide-top');
+  typeLetter();
+});
+
+// Typewriter final letter
+const letterText=`From the moment our eyes first met, I knew my life would never be the same. You walked into my world like a beautiful dream, bringing light to places I didn't even know were dark.Every day with you feels like magic. Your smile brightens my darkest days, your laugh is the sweetest melody I've ever heard, and your love is the greatest gift I could ever receive.I want to spend forever making you smile, forever holding your hand, forever being the reason you believe in love...HAPPIEST BIRTHDAYYY MERI JAAN..!!❤️❤️❤️
+With all my love,sweetheart ❤️😍😚
+Your's Love AKANSHAAA..! ❤️`;
+
+function typeLetter(){
+  const letterDiv=document.getElementById('letter');
+  letterDiv.textContent='';
+  let j=0;
+  function type(){ if(j<letterText.length){ letterDiv.textContent+=letterText.charAt(j); j++; setTimeout(type,25);} }
+  type();
+}
+</script>
+</body>
+</html>
